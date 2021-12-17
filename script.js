@@ -40,8 +40,7 @@ operators.forEach((operator) => {
     operator.addEventListener("click", (event) => {
         currentOperator = operator.value
         inputOperator(event.target.value);
-        updateSecondary(prevNumber);
-        updateSecondary(+= currentOperator);
+        updateSecondary(currentOperator);
     });
 });
 
@@ -71,8 +70,11 @@ const calculate = () => {
         case "^":
             result = Math.pow(parseFloat(prevNumber), parseFloat(currentNumber));
             break;
-        case "sqrt":
+        case "√":
             result = Math.pow(parseFloat(prevNumber), 1/parseFloat(currentNumber));
+            break;
+        case "%" :
+            result = parseFloat(prevNumber) / parseFloat(100);
             break;
         default:
             return;
@@ -86,6 +88,7 @@ const equalSign = document.querySelector(".equal-sign");
 equalSign.addEventListener("click", (event) => {
     calculate(event);
     updateScreen(currentNumber);
+    updateSecondary("");
 });
 
 const clearAll = () => {
@@ -113,18 +116,5 @@ const inputDecimal = (dot) => {
 
 decimal.addEventListener("click", (event) => {
     inputDecimal(event.target.value);
-    updateScreen(currentNumber);
-});
-
-const percent = document.querySelector(".percentage");
-
-const inputPercent = () => {
-    let percented = '';
-    percented = parseFloat(currentNumber) / (100);
-    currentNumber = percented;
-};
-
-percent.addEventListener("click", (event) => {
-    inputPercent(event.target.value);
     updateScreen(currentNumber);
 });
